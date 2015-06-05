@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><%! this.pageTitle %></title>
+	<link rel="stylesheet" href="http://127.0.0.1:8887/cssreset.css">
+	<% _data._CSSLinks && _data._CSSLinks.forEach(function(lessPath){ %>
+		<link rel="stylesheet" href="http://127.0.0.1:8887/<%= lessPath %>.css">
+	<% }); %>
+</head>
+<body>
