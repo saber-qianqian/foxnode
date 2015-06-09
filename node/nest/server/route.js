@@ -1,18 +1,21 @@
 var fs = require('fs');
 var url = require('url');
 var render = require('./render');
+var controller = require('./base/controller');
 global.render = render.render;
+global.controller = controller;
 
-function route(res, req) {
-	var pathname = getController(res).pathname;
-	var handle = getController(res);
-	if(typeof handle === 'function'){
-		return handle(res, req);
+function route(req, res) {
+	var handle = getController(req);
+	if(handle){
+		var controllerFn = require(handle.controller_road)['__create']();
+		controllerFn.setBaseR(req, res);
+		controllerFn[handle.method](handle.args)
 	} else {
-		console.log('No resuest handler found for ' + pathname);
+		console.log('No resuest handler found for ' + handle.method);
 
-		req.writeHead(404, {'Content-Type' : 'text/plain'});
-		req.end('not assign.');
+		res.writeHead(404, {'Content-Type' : 'text/plain'});
+		res.end('not assign.');
 	}
 }
 //url 解析
@@ -22,11 +25,14 @@ function getController(req){
 	var pathString = url.parse(req.url, true).pathname;
 	pathString = pathString.slice(1);
 	var pathA = pathString.split('/');
+	var urlRoute = {}
 	var controller_road = '../../apps/controller/';
 	var method = '';
 	var args = '';
 	var lp = pathA.length;
 
+	// console.log(pathA)
+	// console.log(lp)
 	if(lp > 3){
 		for(var i = 0, k = lp - 3; i < k; i++){
 			controller_road += pathA[i] + '/';
@@ -40,11 +46,14 @@ function getController(req){
 		method = pathA[1] || 'index';
 		args = pathA[2] || '';
 	}
-	console.log(method)
+
 	var controller_file = controller_road + '.js';
 	if(fs.existsSync(controller_file)){
-		console.log(require(controller_road)[method], '/n controller')
-		return require(controller_road)[method];
+		return {
+			controller_road : controller_road
+			, method : method
+			, args : args
+		};
 	}
 	return false;
 }
