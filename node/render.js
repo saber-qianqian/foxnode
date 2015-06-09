@@ -7,7 +7,6 @@ function render (res, req, htmlfile, data) {
 		// console.log(data, 'render show data')
 		try{
 			var htmlBody = ejs.render(htmlfile, data);
-			console.log('htmlBody /n', htmlBody)
 			req.writeHead(200, {"Content-Type": "text/html"});
 		} catch(e) {
 			// console.log(e)
