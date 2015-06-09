@@ -6,3 +6,9 @@ node/static-server/pids
 node/nest/node_modules/.bin/lessc
 
 node/nest/node_modules/less/.idea/.name
+
+node/nest/server/pids
+
+node/nest/static-server/pids
+
+node/nest/static-server/pids
