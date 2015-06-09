@@ -2,3 +2,7 @@
 node/pids
 
 node/static-server/pids
+
+node/nest/node_modules/.bin/lessc
+
+node/nest/node_modules/less/.idea/.name

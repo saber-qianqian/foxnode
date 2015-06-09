@@ -7,7 +7,6 @@ function index(res, req) {
 	this.render(res, req, 'welcome.html', data);
 }
 function h(res, req) {
-	console.log(this)
 	console.log("Request handler 'welcome' was called.");
 	var data = {};
 	data.hello = "hello";
