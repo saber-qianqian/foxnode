@@ -3,25 +3,23 @@ var url = require('url');
 var render = require('./render');
 global.render = render.render;
 
-function route(req, res) {
-	// global.req = req;
-	// global.res = res;
-	var pathname = getController(req).pathname;
-	var handle = getController(req);
+function route(res, req) {
+	var pathname = getController(res).pathname;
+	var handle = getController(res);
 	if(typeof handle === 'function'){
-		return handle(req, res);
+		return handle(res, req);
 	} else {
 		console.log('No resuest handler found for ' + pathname);
 
-		res.writeHead(404, {'Content-Type' : 'text/plain'});
-		res.end('not assign.');
+		req.writeHead(404, {'Content-Type' : 'text/plain'});
+		req.end('not assign.');
 	}
 }
 //url 解析
 // 找到渲染页面的函数
 
-function getController(res){
-	var pathString = url.parse(res.url, true).pathname;
+function getController(req){
+	var pathString = url.parse(req.url, true).pathname;
 	pathString = pathString.slice(1);
 	var pathA = pathString.split('/');
 	var controller_road = '../../apps/controller/';

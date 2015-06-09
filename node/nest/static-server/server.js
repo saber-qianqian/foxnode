@@ -1,8 +1,8 @@
 var http = require('http');
 
 var start = function(route){
-	http.createServer(function(res, req){
-		route(res, req);
+	http.createServer(function(req, res){
+		route(req, res);
 	}).listen(8887);
 
 	console.log("Static server has started.");
