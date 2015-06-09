@@ -4,6 +4,8 @@ var render = require('./render');
 global.render = render.render;
 
 function route(req, res) {
+	// global.req = req;
+	// global.res = res;
 	var pathname = getController(req).pathname;
 	var handle = getController(req);
 	if(typeof handle === 'function'){
@@ -43,6 +45,7 @@ function getController(res){
 	console.log(method)
 	var controller_file = controller_road + '.js';
 	if(fs.existsSync(controller_file)){
+		console.log(require(controller_road)[method], '/n controller')
 		return require(controller_road)[method];
 	}
 	return false;
