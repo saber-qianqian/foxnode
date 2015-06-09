@@ -1,19 +1,21 @@
-function index(res, req) {
-	console.log("Request handler 'welcome' was called.");
-	var data = {};
-	data.hello = "hello";
-	data.pageTitle = '<script>alert(1)</script>';
-	data._CSSLinks = ['home', 'pages/main'];
-	this.render(res, req, 'welcome.html', data);
-}
-function h(res, req) {
-	console.log("Request handler 'welcome' was called.");
-	var data = {};
-	data.hello = "hello";
-	data.pageTitle = '<script>alert(1)</script>';
-	data._CSSLinks = ['home', 'pages/main'];
-	this.render(res, req, 'welcome.html', data);
+var controlFns = {
+	index : function(params){
+		var data = {};
+		data.hello = "hello";
+		data.pageTitle = '<script>alert(1)</script>';
+		data._CSSLinks = ['home', 'pages/main'];
+		this.render('welcome.html', data);
+	},
+	main : function(){
+		var data = {};
+		data.hello = "hello";
+		data.pageTitle = 'main';
+		data._CSSLinks = ['home', 'pages/main'];
+		this.render('welcome.html', data);
+	}
+};
+function welcome(){
+	return this;
 }
 
-exports.index = index;
-exports.h = h;
+exports.__create = controller.__create(welcome, controlFns);

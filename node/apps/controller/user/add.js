@@ -1,18 +1,22 @@
-function index(res, req) {
-	req.writeHead(200, {"Content-Type": "text/html"});
-	var htmlBody = '<!DOCTYPE html>'+
-					'<html lang="en">'+
-					'<head>'+
-					'<meta charset="UTF-8">'+
-					'<title>Add</title>'+
-					'</head>'+
-					'<body>'+
-					'<h1>welcome</h1>'+
-					'<h2>yun qian</h2>'+
-					'</body>'+
-					'</html>';
-	req.write(htmlBody);
-	req.end();
+var controlFns = {
+	index : function(params){
+		console.log('params is: ' + params)
+		var data = {};
+		data.hello = "hello";
+		data.pageTitle = '<script>alert(1)</script>';
+		data._CSSLinks = ['home', 'pages/main'];
+		this.render('welcome.html', data);
+	},
+	main : function(){
+		var data = {};
+		data.hello = "hello";
+		data.pageTitle = 'main';
+		data._CSSLinks = ['home', 'pages/main'];
+		this.render('welcome.html', data);
+	}
+};
+function add(){
+	return this;
 }
 
-exports.index = index;
+exports.__create = controller.__create(add, controlFns);
